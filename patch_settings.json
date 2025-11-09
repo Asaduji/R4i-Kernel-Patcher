@@ -1,0 +1,99 @@
+{
+    "arm9PatchInfo": {
+        "memcpyPattern": "0F 00 52 E3 04 E0 2D E5",
+        "crcStrhAddr": 16798300,
+        "crcBltAddr": 16798316,
+        "crcDataAddr": 37027840,
+        "crcPatchStorePattern": "20 6A 75 73 74 20 73 65 65 6D 73 20 74 6F 20 6E 6F 74 20 62 65 20 65 6E 6F 75 67 68 20 70 6C 61 63 65 20 74 6F 20 70 75 74 20 61 6C 6C 20 79 6F 75 72 20 73 70 72 69 74 65 73 20 21 21",
+        "crcPatchDataSourcePattern": "65 2E 2E 2E 20 54 75 20 70 65 75 78 20 61 75 73 73 69 20 75 74 69 6C 69 73 65 72 20 64 65 73 20 73 70 72 69 74 65 73 20 65 6E 20 31 36 20 63 6F 75 6C 65 75 72 73",
+        "crcPatchBranchPattern": "13 FF 2F E1 33 24 A0 E3 71 2A 82 E2"
+    },
+    "arm7PatchInfo": {
+        "crcAreaPattern": "3F 2F 23 40",
+        "arm9CRCEor1Pattern": "72 40 45 46 2A 40",
+        "arm9CRCEor2Pattern": "56 40 01 31 88 42",
+        "arm9CRCLsrPattern": "33 0A 52 5B 1E 1C",
+        "arm9CRCAddPattern": "1E 1C 56 40 01 31",
+        "arm9CRCValuePattern": "FF FF 00 00 ?? ?? ?? ?? 02 00 38 02 F0 B5 5F 46 56 46",
+        "arm7CRCEor1Pattern": "63 40 3B 40 5B 00 22",
+        "arm7CRCEor2Pattern": "5C 40 86 42 F3 D1 20",
+        "arm7CRCAddPattern": "14 1C 01 30 02 31 5C",
+        "arm7CRCValuePattern": "FF FF 00 00 ?? ?? ?? ?? 02 00 38 02 F0 B5 47 46 80 B4"
+
+    },
+    "extraPatches": [
+        {
+            "name": "Fake card check hang fix",
+            "description": "NOP branch to not get stuck in a loop",
+            "pattern": "07 00 00 0A 0A 28 A0 E1 01 33 A0 E3 22 28 A0 E1 01 3C 83 E2 B0 2A C3 E1",
+            "patchBytes": "00 00 A0 E1"
+        },
+        {
+            "name": "Hang loop fix",
+            "description": "Take branch to avoid a generic hang loop the kernel uses on purpose if a check fails",
+            "pattern": "00 10 A0 E3 00 20 A0 E3 00 30 A0 E3 01 30 83 E2 01 00 73 E3 FC",
+            "patchBytes": "09 00 00 EA"
+        },
+        {
+            "name": "Hang fix 1",
+            "description": "NOP branch to avoid a hang loop if verification fails",
+            "pattern": "07 00 00 0A 00 30 94 E5 00 00 53 E3 03 00 A0 E3 01 00 00 0A 10 40 BD E8 1E FF 2F E1 A4 FE FE EB",
+            "patchBytes": "00 00 A0 E1"
+        },
+        {
+            "name": "Hang fix 2",
+            "description": "NOP branch to avoid a hang loop if verification fails",
+            "pattern": "01 00 00 0A 10 40 BD E8 1E FF 2F E1 A4 FE FE EB FB FF FF EA A2 FE FE EB F5 FF FF EA 70 E8 08 02",
+            "patchBytes": "00 00 A0 E1"
+        },
+
+        {
+            "name": "Upgrade firmware skip 1",
+            "description": "NOP upgrade firmware verification branch",
+            "pattern": "01 00 00 0A 10 40 BD E8 1E FF 2F E1 01 00 80 E2 E1 C9 00 EB 04 00 A0 E1 DF C9 00 EB 64 30 9F E5 00 10 93 E5",
+            "patchBytes": "00 00 A0 E1"
+        },
+        {
+            "name": "Upgrade firmware skip 2",
+            "description": "NOP upgrade firmware verification branch",
+            "pattern": "B0 00 00 1A 42 0F 8D E2 05 24 A0 E3 04 30 20 E5 01 29 82 E2 02 14 A0 E3 DA CF 00 EB 30 CB FF EB 00 20 D6 E5 E0 14 9F E5",
+            "patchBytes": "00 00 A0 E1"
+        },
+        {
+            "name": "Upgrade firmware skip 3",
+            "description": "NOP upgrade firmware verification branch",
+            "pattern": "0A 00 00 0A 4B CA FF EB 50 31 9F E5 A8 20 9F E5 02 40 A0 E3 00 50 C3 E5 00 40 C2 E5",
+            "patchBytes": "00 00 A0 E1"
+        },
+        {
+            "name": "Upgrade firmware skip 4",
+            "description": "Take branch to avoid upgrade firmware verification",
+            "pattern": "90 FC FF 1A 05 00 A0 E1 15 37 00 EB 70 59 1F E5 04 00 A0 E1 12 37 00 EB 05 24 A0 E3",
+            "patchBytes": "90 FC FF EA"
+        },
+        {
+            "name": "Upgrade firmware skip 5",
+            "description": "Take branch to avoid upgrade firmware verification",
+            "pattern": "4E FF FF 0A 00 00 D6 E5 B9 CA FF EB 00 00 50 E3 50 FF FF 1A",
+            "patchBytes": "4E FF FF EA"
+        },
+        {
+            "name": "Fake card check skip",
+            "description": "Take a branch to avoid card verification",
+            "pattern": "04 E0 2D E5 04 D0 4D E2 98 FC FF EB 00 00 50 E3 05 00 00 0A",
+            "patchBytes": "08 00 00 EA"
+        },
+        {
+            "name": "ARM9 CRC game boot verification skip",
+            "description": "NOP a branch to skip CRC verification, not really needed but doesn't hurt",
+            "pattern": "FD FF FF 1A 02 00 58 E1 FB FF FF 1A",
+            "patchBytes": "00 00 A0 E1"
+        },
+        {
+            "name": "Loader CRC verification skip",
+            "description": "NOP a branch to skip Loader CRC verification, only needed if loader has been modified",
+            "pattern": "FB FF FF 1A 00 38 9F E5 00 20 D3 E5 00 00",
+            "patchBytes": "00 00 A0 E1"
+        }
+    ]
+}
